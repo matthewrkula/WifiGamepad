@@ -22,6 +22,7 @@ import java.net.Socket;
 public class GamepadActivity extends Activity {
 
     public static final String EXTRA_IP = "ipaddress";
+    public static final String EXTRA_PORT = "port";
 
     ImageView b1, b2, b3, b4, b5, b6;
 
@@ -47,13 +48,18 @@ public class GamepadActivity extends Activity {
         b5.setOnTouchListener(new ButtonTouchListener(5));
         b6.setOnTouchListener(new ButtonTouchListener(6));
 
+        connectToSocket();
+    }
+
+    private void connectToSocket(){
         final String ipAddress = getIntent().getStringExtra(EXTRA_IP);
+        final int port = getIntent().getIntExtra(EXTRA_PORT, 4848);
 
         new Thread(){
             @Override
             public void run() {
                 try {
-                    socket = new Socket(ipAddress, 4848);
+                    socket = new Socket(ipAddress, port);
                     outputStream = new DataOutputStream(socket.getOutputStream());
                 } catch (ConnectException e){
                     finish();
@@ -62,12 +68,6 @@ public class GamepadActivity extends Activity {
                 }
             }
         }.start();
-    }
-
-    public static Intent generateIntent(Context c, String ipAddress){
-        Intent i = new Intent(c, GamepadActivity.class);
-        i.putExtra(EXTRA_IP, ipAddress);
-        return i;
     }
 
     public void sendData(final int data, final boolean down){
@@ -85,6 +85,13 @@ public class GamepadActivity extends Activity {
                 }
             }.start();
         }
+    }
+
+    public static Intent generateIntent(Context c, String ipAddress, String port){
+        Intent i = new Intent(c, GamepadActivity.class);
+        i.putExtra(EXTRA_IP, ipAddress);
+        i.putExtra(EXTRA_PORT, Integer.parseInt(port));
+        return i;
     }
 
     private class ButtonTouchListener implements View.OnTouchListener {

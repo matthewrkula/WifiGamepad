@@ -9,7 +9,7 @@ import android.widget.EditText;
 
 public class MainActivity extends Activity {
 
-    EditText editIPAddress;
+    EditText editIPAddress, editPort;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -18,14 +18,17 @@ public class MainActivity extends Activity {
 
         editIPAddress = (EditText)findViewById(R.id.edit_ip_input);
         editIPAddress.setText("10.0.0.4");
+        editPort = (EditText)findViewById(R.id.edit_port);
         Button btnSubmit = (Button)findViewById(R.id.button_submit);
 
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String ipAddress = editIPAddress.getText().toString();
-                if(ipAddress.matches("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}")){
-                    Intent i = GamepadActivity.generateIntent(MainActivity.this, ipAddress);
+                String port = editPort.getText().toString();
+                if(ipAddress.matches("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}") &&
+                        port.matches("\\d+")){
+                    Intent i = GamepadActivity.generateIntent(MainActivity.this, ipAddress, port);
                     startActivity(i);
                 }
             }

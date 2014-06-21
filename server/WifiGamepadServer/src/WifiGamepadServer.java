@@ -34,8 +34,8 @@ public class WifiGamepadServer {
 			}
 		}
 		
-		System.out.println("My address is " + NetworkUtils.getIp());
-		System.out.println("Listening on socket " + desiredPort);
+		System.out.println("IPAddress: " + NetworkUtils.getIp());
+		System.out.println("Port: " + desiredPort);
 				
 		activeSocket = serverSocket.accept();
 		socketReader = new DataInputStream(activeSocket.getInputStream());

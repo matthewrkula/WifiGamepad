@@ -6,30 +6,32 @@
         >
 
     <EditText
-            android:id="@+id/edit_ip_input"
+            android:id="@+id/edit_port"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"/>
-
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Please enter IP Address"
-            android:layout_above="@+id/edit_ip_input"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="30dp"
-            android:textSize="20sp"
-            android:typeface="sans"
+            android:layout_centerInParent="true"
+            android:hint="Port"
             />
 
     <Button
             android:id="@+id/button_submit"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_below="@id/edit_ip_input"
             android:layout_centerHorizontal="true"
+            android:layout_below="@id/edit_port"
             android:layout_marginTop="35dp"
             android:text="Okay"
             />
+
+    <EditText
+            android:id="@+id/edit_ip_input"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/edit_port"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:hint="IP Address"
+            />
+
 </RelativeLayout>
 
