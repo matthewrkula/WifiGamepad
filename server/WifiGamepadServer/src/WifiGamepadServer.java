@@ -7,6 +7,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.HashMap;
 
 
 public class WifiGamepadServer {
@@ -18,6 +19,7 @@ public class WifiGamepadServer {
 	boolean isRunning = false;
 	
 	Robot robot;
+	HashMap<Integer, Integer> keyMap;
 	
 	public WifiGamepadServer() throws UnknownHostException, IOException, AWTException {
 		serverSocket = new ServerSocket(4848);
@@ -27,6 +29,17 @@ public class WifiGamepadServer {
 		activeSocket = serverSocket.accept();
 		socketReader = new DataInputStream(activeSocket.getInputStream());
 		robot = new Robot();
+		generateKeyMap();
+	}
+	
+	private void generateKeyMap(){
+		keyMap = new HashMap<Integer, Integer>();
+		keyMap.put(1, KeyEvent.VK_LEFT);
+		keyMap.put(2, KeyEvent.VK_UP);
+		keyMap.put(3, KeyEvent.VK_RIGHT);
+		keyMap.put(4, KeyEvent.VK_DOWN);
+		keyMap.put(5, KeyEvent.VK_D);
+		keyMap.put(6, KeyEvent.VK_S);
 	}
 	
 	public void start() throws IOException {
@@ -44,27 +57,7 @@ public class WifiGamepadServer {
 	}
 	
 	public void pressKey(int i, boolean b){
-		int keyEvent = 0;
-		switch(i){
-			case 1:
-				keyEvent = KeyEvent.VK_LEFT;
-				break;
-			case 2:
-				keyEvent = KeyEvent.VK_UP;
-				break;
-			case 3:
-				keyEvent = KeyEvent.VK_RIGHT;
-				break;
-			case 4:
-				keyEvent = KeyEvent.VK_DOWN;
-				break;
-			case 5:
-				keyEvent = KeyEvent.VK_D;
-				break;
-			case 6:
-				keyEvent = KeyEvent.VK_S;
-				break;
-		}
+		int keyEvent = keyMap.get(i);
 		if(b){
 			robot.keyPress(keyEvent);
 		} else {
