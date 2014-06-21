@@ -87,6 +87,12 @@ public class GamepadActivity extends Activity {
         }
     }
 
+    @Override
+    public void finish() {
+        sendData(-1, true);
+        super.finish();
+    }
+
     public static Intent generateIntent(Context c, String ipAddress, String port){
         Intent i = new Intent(c, GamepadActivity.class);
         i.putExtra(EXTRA_IP, ipAddress);

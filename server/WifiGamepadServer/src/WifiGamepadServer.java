@@ -59,11 +59,15 @@ public class WifiGamepadServer {
 		int button;
 		boolean isDown;
 		
+
 		while(isRunning) {
 			button = socketReader.readInt();
 			isDown = socketReader.readBoolean();
-			pressKey(button, isDown);
-			System.out.println(button + " was " + (isDown ? "pressed" : "released"));
+			if(button == -1){
+				isRunning = false;
+			} else {
+				pressKey(button, isDown);
+			}
 		}
 	}
 	
