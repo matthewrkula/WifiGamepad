@@ -24,7 +24,7 @@ public class WifiGamepadServer {
 	public WifiGamepadServer() throws UnknownHostException, IOException, AWTException {
 		serverSocket = new ServerSocket(4848);
 		
-		System.out.println("My address is " + InetAddress.getLocalHost().getHostAddress());
+		System.out.println("My address is " + NetworkUtils.getIp());
 		
 		activeSocket = serverSocket.accept();
 		socketReader = new DataInputStream(activeSocket.getInputStream());
