@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+        >
+
+    <EditText
+            android:id="@+id/edit_ip_input"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"/>
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Please enter IP Address"
+            android:layout_above="@+id/edit_ip_input"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="30dp"
+            android:textSize="20sp"
+            android:typeface="sans"
+            />
+
+    <Button
+            android:id="@+id/button_submit"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/edit_ip_input"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="35dp"
+            android:text="Okay"
+            />
+</RelativeLayout>
+
