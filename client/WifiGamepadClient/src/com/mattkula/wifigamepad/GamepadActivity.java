@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.Socket;
 
 /**
@@ -54,14 +55,10 @@ public class GamepadActivity extends Activity {
                 try {
                     socket = new Socket(ipAddress, 4848);
                     outputStream = new DataOutputStream(socket.getOutputStream());
+                } catch (ConnectException e){
+                    finish();
                 } catch (Exception e){
                     e.printStackTrace();
-                    b1.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(GamepadActivity.this, "Error connecting", 500).show();
-                        }
-                    });
                 }
             }
         }.start();

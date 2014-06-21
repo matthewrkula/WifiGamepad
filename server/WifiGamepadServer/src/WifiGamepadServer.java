@@ -3,7 +3,7 @@ import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.net.InetAddress;
+import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -12,6 +12,7 @@ import java.util.HashMap;
 
 public class WifiGamepadServer {
 	
+	int desiredSocket = 4848;
 	ServerSocket serverSocket;
 	Socket activeSocket;
 	
@@ -22,10 +23,20 @@ public class WifiGamepadServer {
 	HashMap<Integer, Integer> keyMap;
 	
 	public WifiGamepadServer() throws UnknownHostException, IOException, AWTException {
-		serverSocket = new ServerSocket(4848);
+		boolean socketFound = false;
+		
+		while(!socketFound){
+			try {
+				serverSocket = new ServerSocket(desiredSocket);
+				socketFound = true;
+			} catch (BindException e){
+				desiredSocket++;
+			}
+		}
 		
 		System.out.println("My address is " + NetworkUtils.getIp());
-		
+		System.out.println("Listening on socket " + desiredSocket);
+				
 		activeSocket = serverSocket.accept();
 		socketReader = new DataInputStream(activeSocket.getInputStream());
 		robot = new Robot();
