@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +22,7 @@ public class GamepadActivity extends Activity {
 
     public static final String EXTRA_IP = "ipaddress";
 
-    ImageView b1, b2, b3, b4;
+    ImageView b1, b2, b3, b4, b5, b6;
 
     Socket socket;
     DataOutputStream outputStream;
@@ -35,11 +36,15 @@ public class GamepadActivity extends Activity {
         b2 = (ImageView)findViewById(R.id.imageView2);
         b3 = (ImageView)findViewById(R.id.imageView3);
         b4 = (ImageView)findViewById(R.id.imageView4);
+        b5 = (ImageView)findViewById(R.id.imageView5);
+        b6 = (ImageView)findViewById(R.id.imageView6);
 
         b1.setOnTouchListener(new ButtonTouchListener(1));
         b2.setOnTouchListener(new ButtonTouchListener(2));
         b3.setOnTouchListener(new ButtonTouchListener(3));
         b4.setOnTouchListener(new ButtonTouchListener(4));
+        b5.setOnTouchListener(new ButtonTouchListener(5));
+        b6.setOnTouchListener(new ButtonTouchListener(6));
 
         final String ipAddress = getIntent().getStringExtra(EXTRA_IP);
 
@@ -98,6 +103,8 @@ public class GamepadActivity extends Activity {
             switch (motionEvent.getAction()){
                 case MotionEvent.ACTION_DOWN:
                     sendData(buttonNumber, true);
+                    Vibrator vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+                    vibrator.vibrate(25);
                     return true;
                 case MotionEvent.ACTION_UP:
                 case MotionEvent.ACTION_CANCEL:

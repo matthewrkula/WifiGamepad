@@ -58,6 +58,12 @@ public class WifiGamepadServer {
 			case 4:
 				keyEvent = KeyEvent.VK_DOWN;
 				break;
+			case 5:
+				keyEvent = KeyEvent.VK_D;
+				break;
+			case 6:
+				keyEvent = KeyEvent.VK_S;
+				break;
 		}
 		if(b){
 			robot.keyPress(keyEvent);
