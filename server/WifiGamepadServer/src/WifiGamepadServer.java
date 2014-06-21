@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 public class WifiGamepadServer {
 	
-	int desiredSocket = 4848;
+	int desiredPort = 4848;
 	ServerSocket serverSocket;
 	Socket activeSocket;
 	
@@ -27,15 +27,15 @@ public class WifiGamepadServer {
 		
 		while(!socketFound){
 			try {
-				serverSocket = new ServerSocket(desiredSocket);
+				serverSocket = new ServerSocket(desiredPort);
 				socketFound = true;
 			} catch (BindException e){
-				desiredSocket++;
+				desiredPort++;
 			}
 		}
 		
 		System.out.println("My address is " + NetworkUtils.getIp());
-		System.out.println("Listening on socket " + desiredSocket);
+		System.out.println("Listening on socket " + desiredPort);
 				
 		activeSocket = serverSocket.accept();
 		socketReader = new DataInputStream(activeSocket.getInputStream());
