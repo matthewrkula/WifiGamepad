@@ -1,64 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<GridLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:id = "@+id/rootGridLayout"
+    >
 
-    <ImageView
-            android:layout_width="@dimen/button_size"
-            android:layout_height="@dimen/button_size"
-            android:id="@+id/imageView"
-            android:background="@android:color/holo_green_light"
-            android:layout_alignParentTop="true" android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"/>
 
-    <ImageView
-            android:layout_width="@dimen/button_size"
-            android:layout_height="@dimen/button_size"
-            android:id="@+id/imageView2"
-            android:background="@android:color/holo_red_light"
-            android:layout_below="@+id/imageView"
-            android:layout_marginLeft="@dimen/button_size"
-            android:layout_alignLeft="@+id/imageView"
-            />
 
-    <ImageView
-            android:layout_width="@dimen/button_size"
-            android:layout_height="@dimen/button_size"
-            android:id="@+id/imageView3"
-            android:background="@android:color/holo_blue_light"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/imageView2"/>
 
-    <ImageView
-            android:layout_width="@dimen/button_size"
-            android:layout_height="@dimen/button_size"
-            android:id="@+id/imageView4"
-            android:background="@android:color/holo_purple"
-            android:layout_below="@+id/imageView"
-            android:layout_marginRight="@dimen/button_size"
-            android:layout_alignRight="@+id/imageView"
-            />
 
-    <ImageView
-            android:layout_width="@dimen/button_size"
-            android:layout_height="@dimen/button_size"
-            android:id="@+id/imageView5"
-            android:background="@android:color/holo_orange_dark"
-            android:layout_marginRight="@dimen/button_size"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="20dp"
-            />
 
-    <ImageView
-            android:layout_width="@dimen/button_size"
-            android:layout_height="@dimen/button_size"
-            android:id="@+id/imageView6"
-            android:background="@android:color/holo_red_dark"
-            android:layout_marginRight="@dimen/button_size"
-            android:layout_above="@+id/imageView5"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="20dp"
-            />
+
+
+
+
+
+    </GridLayout>
+
+
+
 </RelativeLayout>

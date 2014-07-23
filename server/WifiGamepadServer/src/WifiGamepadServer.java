@@ -74,6 +74,7 @@ public class WifiGamepadServer {
 	public void pressKey(int i, boolean b){
 		int keyEvent = keyMap.get(i);
 		if(b){
+
 			robot.keyPress(keyEvent);
 		} else {
 			robot.keyRelease(keyEvent);

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="fill_parent"
@@ -24,17 +25,7 @@
             android:text="Okay"
             />
 
-    <EditText
-            android:id="@+id/edit_ip_input"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/edit_port"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="20dp"
-            android:inputType="number"
-            android:digits="0123456789."
-            android:hint="IP Address"
-            />
+
 
 </RelativeLayout>
 
