@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.mattkula.wifigamepad.customlayouting.ButtonType;
 import com.mattkula.wifigamepad.customlayouting.GridElementButton;
 
+
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ConnectException;
@@ -34,7 +35,6 @@ public class GamepadActivity extends Activity {
     public static final String EXTRA_IP = "ipaddress";
     public static final String EXTRA_PORT = "port";
 
-    private ImageView b1, b2, b3, b4, b5, b6;
 
     private Socket socket;
     private DataOutputStream outputStream;
@@ -43,22 +43,7 @@ public class GamepadActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gamepad);
-//
-//        b1 = (ImageView)findViewById(R.id.imageView);
-//        b2 = (ImageView)findViewById(R.id.imageView2);
-//        b3 = (ImageView)findViewById(R.id.imageView3);
-//        b4 = (ImageView)findViewById(R.id.imageView4);
-//        b5 = (ImageView)findViewById(R.id.imageView5);
-//        b6 = (ImageView)findViewById(R.id.imageView6);
-//
-//        b1.setOnTouchListener(new ButtonTouchListener(1));
-//        b2.setOnTouchListener(new ButtonTouchListener(2));
-//        b3.setOnTouchListener(new ButtonTouchListener(3));
-//        b4.setOnTouchListener(new ButtonTouchListener(4));
-//        b5.setOnTouchListener(new ButtonTouchListener(5));
-//        b6.setOnTouchListener(new ButtonTouchListener(6));
-//
-//        connectToSocket();
+
 
         int[] sizeOfGrid = autoAdjustGridLayout();
         int cols = sizeOfGrid[0];
@@ -154,36 +139,6 @@ public class GamepadActivity extends Activity {
         return i;
     }
 
-    private class ButtonTouchListener implements View.OnTouchListener {
 
-        private int buttonNumber;
-
-        public ButtonTouchListener(int buttonNumber){
-            this.buttonNumber = buttonNumber;
         }
 
-
-
-
-
-
-
-        @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            switch (motionEvent.getAction()){
-                case MotionEvent.ACTION_DOWN:
-                    sendData(buttonNumber, true);
-                    Vibrator vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
-                    vibrator.vibrate(25);
-                    return true;
-                case MotionEvent.ACTION_UP:
-                case MotionEvent.ACTION_CANCEL:
-                    sendData(buttonNumber, false);
-                    return true;
-            }
-            return false;
-        }
-
-
-    }
-}
