@@ -17,7 +17,9 @@ public class MainActivity extends Activity {
         setContentView(R.layout.main);
 
         editIPAddress = (EditText)findViewById(R.id.edit_ip_input);
+        editIPAddress.setText("10.0.0.4");
         editPort = (EditText)findViewById(R.id.edit_port);
+        editPort.setText("4848");
         Button btnSubmit = (Button)findViewById(R.id.button_submit);
 
         editIPAddress.requestFocus();

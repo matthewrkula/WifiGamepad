@@ -40,17 +40,6 @@ public class WifiGamepadServer {
 		activeSocket = serverSocket.accept();
 		socketReader = new DataInputStream(activeSocket.getInputStream());
 		robot = new Robot();
-		generateKeyMap();
-	}
-	
-	private void generateKeyMap(){
-		keyMap = new HashMap<Integer, Integer>();
-		keyMap.put(1, KeyEvent.VK_LEFT);
-		keyMap.put(2, KeyEvent.VK_UP);
-		keyMap.put(3, KeyEvent.VK_RIGHT);
-		keyMap.put(4, KeyEvent.VK_DOWN);
-		keyMap.put(5, KeyEvent.VK_D);
-		keyMap.put(6, KeyEvent.VK_S);
 	}
 	
 	public void start() throws IOException {
@@ -72,7 +61,8 @@ public class WifiGamepadServer {
 	}
 	
 	public void pressKey(int i, boolean b){
-		int keyEvent = keyMap.get(i);
+		int keyEvent = i;
+		System.out.println("Received key: " + i);
 		if(b){
 			robot.keyPress(keyEvent);
 		} else {

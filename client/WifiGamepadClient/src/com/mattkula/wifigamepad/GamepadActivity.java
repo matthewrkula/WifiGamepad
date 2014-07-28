@@ -5,16 +5,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+import com.mattkula.wifigamepad.utilities.Keybridge;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.Socket;
+import java.security.Key;
 
 /**
  * Created by matt on 6/21/14.
@@ -41,21 +44,21 @@ public class GamepadActivity extends Activity {
         b5 = (ImageView)findViewById(R.id.imageView5);
         b6 = (ImageView)findViewById(R.id.imageView6);
 
-        b1.setOnTouchListener(new ButtonTouchListener(1));
-        b2.setOnTouchListener(new ButtonTouchListener(2));
-        b3.setOnTouchListener(new ButtonTouchListener(3));
-        b4.setOnTouchListener(new ButtonTouchListener(4));
-        b5.setOnTouchListener(new ButtonTouchListener(5));
-        b6.setOnTouchListener(new ButtonTouchListener(6));
+        b1.setOnTouchListener(new ButtonTouchListener(Keybridge.getServerKeycode(KeyEvent.KEYCODE_DPAD_LEFT)));
+        b2.setOnTouchListener(new ButtonTouchListener(Keybridge.getServerKeycode(KeyEvent.KEYCODE_DPAD_UP)));
+        b3.setOnTouchListener(new ButtonTouchListener(Keybridge.getServerKeycode(KeyEvent.KEYCODE_DPAD_RIGHT)));
+        b4.setOnTouchListener(new ButtonTouchListener(Keybridge.getServerKeycode(KeyEvent.KEYCODE_DPAD_DOWN)));
+        b5.setOnTouchListener(new ButtonTouchListener(Keybridge.getServerKeycode('D')));
+        b6.setOnTouchListener(new ButtonTouchListener(Keybridge.getServerKeycode('S')));
 
         connectToSocket();
     }
 
-    private void connectToSocket(){
+    private void connectToSocket() {
         final String ipAddress = getIntent().getStringExtra(EXTRA_IP);
         final int port = getIntent().getIntExtra(EXTRA_PORT, 4848);
 
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 try {
@@ -81,6 +84,13 @@ public class GamepadActivity extends Activity {
                         outputStream.flush();
                     } catch (IOException e){
                         e.printStackTrace();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(GamepadActivity.this, "Lost connection.", Toast.LENGTH_LONG).show();
+                                finish();
+                            }
+                        });
                     }
                 }
             }.start();
@@ -93,7 +103,7 @@ public class GamepadActivity extends Activity {
         super.finish();
     }
 
-    public static Intent generateIntent(Context c, String ipAddress, String port){
+    public static Intent generateIntent(Context c, String ipAddress, String port) {
         Intent i = new Intent(c, GamepadActivity.class);
         i.putExtra(EXTRA_IP, ipAddress);
         i.putExtra(EXTRA_PORT, Integer.parseInt(port));
@@ -104,7 +114,7 @@ public class GamepadActivity extends Activity {
 
         int buttonNumber;
 
-        public ButtonTouchListener(int buttonNumber){
+        public ButtonTouchListener(int buttonNumber) {
             this.buttonNumber = buttonNumber;
         }
 
