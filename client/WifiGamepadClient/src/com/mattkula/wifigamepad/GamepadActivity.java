@@ -16,10 +16,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.mattkula.wifigamepad.customlayouting.ButtonType;
+import com.mattkula.wifigamepad.customlayouting.Grid;
 import com.mattkula.wifigamepad.customlayouting.GridElementButton;
+import com.mattkula.wifigamepad.customlayouting.GridLayoutManager;
 
 
 import java.io.DataOutputStream;
@@ -36,109 +39,35 @@ public class GamepadActivity extends Activity {
     public static final String EXTRA_PORT = "port";
 
 
-    private Socket socket;
-    private DataOutputStream outputStream;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gamepad);
 
-
-        int[] sizeOfGrid = autoAdjustGridLayout();
-        int cols = sizeOfGrid[0];
-        int rows = sizeOfGrid[1];
-
-        for(int i = 0; i < cols * rows;i++){
-            GridLayout gridLayout = ((GridLayout)findViewById(R.id.rootGridLayout));
-            gridLayout.addView(new GridElementButton(this));
-        }
+        String ipAddress = getIntent().getStringExtra(EXTRA_IP);
+        int port = getIntent().getIntExtra(EXTRA_PORT, 4848);
+       // SocketManager.connectToSocket(this, ipAddress, port);
+        Bundle b=this.getIntent().getExtras();
+        String[] elements=b.getStringArray("grid");
+        Grid.autoAdjustGridLayout(this,(GridLayout)findViewById(R.id.gamePadGridLayout));
+        GridLayoutManager.loadLayoutGamepad(((GridLayout)findViewById(R.id.gamePadGridLayout)),elements,this);
 
     }
 
-    //Returns size of grid
-    private int[] autoAdjustGridLayout(){
-        int width,height;
-        if (android.os.Build.VERSION.SDK_INT >= 13){
-            Display display = getWindowManager().getDefaultDisplay();
-            Point size = new Point();
-            display.getSize(size);
-            width = size.x;
-            height = size.y;
-        }
-        else {
-            Display display = getWindowManager().getDefaultDisplay();
-             width = display.getWidth();
-             height = display.getHeight();
-        }
-        width = dpFromPx(width);
-        height = dpFromPx(height);
+    //Static Utility methods:
 
-        int amountOfRows = height/70;
-        int amountOfCols = width/70;
+    public static Intent generateIntent(Context c, String ipAddress, int port,Grid grid){
 
-        GridLayout gridLayout = ((GridLayout)findViewById(R.id.rootGridLayout));
-
-        gridLayout.setColumnCount(amountOfCols);
-        gridLayout.setRowCount(amountOfRows);
-        return new int[]{amountOfCols,amountOfRows};
-    }
-    private int dpFromPx(float px){
-        Resources resources = this.getResources();
-        DisplayMetrics metrics = resources.getDisplayMetrics();
-        float dp = px / (metrics.densityDpi / 160f);
-        return (int) dp;
-    }
-
-    private void connectToSocket(){
-        final String ipAddress = getIntent().getStringExtra(EXTRA_IP);
-        final int port = getIntent().getIntExtra(EXTRA_PORT, 4848);
-
-        new Thread(){
-            @Override
-            public void run() {
-                try {
-                    socket = new Socket(ipAddress, port);
-                    outputStream = new DataOutputStream(socket.getOutputStream());
-                } catch (ConnectException e){
-                    finish();
-                } catch (Exception e){
-                    e.printStackTrace();
-                }
-            }
-        }.start();
-    }
-
-    public void sendData(final int data, final boolean down){
-        if(socket != null && socket.isConnected() && outputStream != null){
-            new Thread(){
-                @Override
-                public void run() {
-                    try {
-                        outputStream.writeInt(data);
-                        outputStream.writeBoolean(down);
-                        outputStream.flush();
-                    } catch (IOException e){
-                        e.printStackTrace();
-                    }
-                }
-            }.start();
-        }
-    }
-
-    @Override
-    public void finish() {
-        sendData(-1, true);
-        super.finish();
-    }
-
-    public static Intent generateIntent(Context c, String ipAddress, String port){
         Intent i = new Intent(c, GamepadActivity.class);
         i.putExtra(EXTRA_IP, ipAddress);
-        i.putExtra(EXTRA_PORT, Integer.parseInt(port));
+        i.putExtra(EXTRA_PORT, port);
+
+        Bundle b=new Bundle();
+        b.putStringArray("grid", grid.getElementNames());
+        i.putExtras(b);
+
         return i;
     }
 
 
-        }
-
+}

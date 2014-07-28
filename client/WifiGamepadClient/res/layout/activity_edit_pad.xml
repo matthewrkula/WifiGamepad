@@ -1,0 +1,53 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mattkula.wifigamepad.customlayouting.EditPadActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+        <GridLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id = "@+id/rootGridLayout"
+            android:layout_gravity="center_horizontal"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            >
+
+            <Button
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginRight = "10dp"
+                android:text = "Save"
+                android:onClick="clickedSave"/>
+
+            <Button
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+
+                android:layout_marginRight = "10dp"
+                android:text = "Load"
+                android:onClick="clickedLoad"/>
+            <Button
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+
+                android:text = "Start"
+                android:onClick="clickedStart"
+
+                />
+
+            </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>
