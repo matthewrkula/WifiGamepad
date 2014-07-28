@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.mattkula.wifigamepad.customlayouting.EditPadActivity;
+
 public class MainActivity extends Activity {
 
     EditText editIPAddress, editPort;
@@ -31,7 +33,7 @@ public class MainActivity extends Activity {
                 String port = editPort.getText().toString();
                 if(ipAddress.matches("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}") &&
                         port.matches("\\d+")){
-                    Intent i = GamepadActivity.generateIntent(MainActivity.this, ipAddress, port);
+                    Intent i = EditPadActivity.generateIntent(MainActivity.this, ipAddress, port);
                     startActivity(i);
                 }
             }

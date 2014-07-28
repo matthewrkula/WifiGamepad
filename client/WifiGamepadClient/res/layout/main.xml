@@ -1,40 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
         >
 
+
     <EditText
-            android:id="@+id/edit_port"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:inputType="number"
-            android:hint="Port"
-            />
+        android:id="@+id/edit_port"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:inputType="number"
+        android:hint="Port"
+        />
 
     <Button
-            android:id="@+id/button_submit"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/edit_port"
-            android:layout_marginTop="35dp"
-            android:text="Okay"
-            />
+        android:id="@+id/button_submit"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/edit_port"
+        android:layout_marginTop="35dp"
+        android:text="Okay"
+        />
 
     <EditText
-            android:id="@+id/edit_ip_input"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/edit_port"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="20dp"
-            android:inputType="number"
-            android:digits="0123456789."
-            android:hint="IP Address"
-            />
+        android:id="@+id/edit_ip_input"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/edit_port"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:inputType="numberDecimal"
+        android:digits="0123456789."
+        android:hint="IP Address"
+        />
+
 
 </RelativeLayout>
 

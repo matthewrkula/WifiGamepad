@@ -64,6 +64,7 @@ public class WifiGamepadServer {
 		int keyEvent = i;
 		System.out.println("Received key: " + i);
 		if(b){
+
 			robot.keyPress(keyEvent);
 		} else {
 			robot.keyRelease(keyEvent);
