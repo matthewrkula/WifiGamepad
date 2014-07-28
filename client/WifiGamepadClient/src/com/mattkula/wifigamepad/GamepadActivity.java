@@ -46,11 +46,13 @@ public class GamepadActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gamepad);
 
-        String ipAddress = getIntent().getStringExtra(EXTRA_IP);
-        int port = getIntent().getIntExtra(EXTRA_PORT, 4848);
-        // SocketManager.connectToSocket(this, ipAddress, port);
-        Bundle b=this.getIntent().getExtras();
-        String[] elements=b.getStringArray("grid");
+        Bundle b = this.getIntent().getExtras();
+        String ipAddress = b.getString(EXTRA_IP);
+        int port = b.getInt(EXTRA_PORT, 4848);
+        String[] elements = b.getStringArray("grid");
+
+        SocketManager.connectToSocket(this, ipAddress, port);
+
         Grid.autoAdjustGridLayout(this,(GridLayout)findViewById(R.id.gamePadGridLayout));
         GridLayoutManager.loadLayoutGamepad(((GridLayout)findViewById(R.id.gamePadGridLayout)),elements,this);
     }
@@ -61,11 +63,7 @@ public class GamepadActivity extends Activity {
         Intent i = new Intent(c, GamepadActivity.class);
         i.putExtra(EXTRA_IP, ipAddress);
         i.putExtra(EXTRA_PORT, port);
-
-        Bundle b=new Bundle();
-        b.putStringArray("grid", grid.getElementNames());
-        i.putExtras(b);
-
+        i.putExtra("grid", grid.getElementNames());
         return i;
     }
 }

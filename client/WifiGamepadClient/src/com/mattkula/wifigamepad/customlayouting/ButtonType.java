@@ -11,10 +11,8 @@ public enum ButtonType {
     //TODO: Add more button types.
     LEFT(1),RIGHT(2),UP(3),DOWN(4),
 
-
     //All these are characters which will be converted to their ascii integers.
     A(5),B(6),W(7),S(8),D(9),
-
 
     START(10),SELECT(11);
 

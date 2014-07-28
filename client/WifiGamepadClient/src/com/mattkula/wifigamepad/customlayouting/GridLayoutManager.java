@@ -25,10 +25,8 @@ public class GridLayoutManager {
             if(!geb.getCurrentName().equals("none")){
                 geb.setBackgroundColor(geb.getCurrentButtonType().getColor(c));
             }
-
         }
     }
-
 
     public static Grid loadLayout(GridLayout gridLayout, String[] elements, Context c){
         gridLayout.removeAllViews();
@@ -39,7 +37,6 @@ public class GridLayoutManager {
         List<GridElementButton> gridElements = grid.getElements();
 
         for (int i = 0; i < elements.length; i++) {
-            //Skip the elements that contain "none"
             if(elements[i].equals("none")){
                 continue;
             }
@@ -48,7 +45,4 @@ public class GridLayoutManager {
         }
         return grid;
     }
-
-
-
 }

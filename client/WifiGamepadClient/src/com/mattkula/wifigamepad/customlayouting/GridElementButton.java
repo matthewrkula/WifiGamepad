@@ -56,10 +56,9 @@ public class GridElementButton extends Button {
                 }
             }
         });
-
     }
-    public String getCurrentName(){
 
+    public String getCurrentName(){
         if(this.getText().length() == 0) {
             return "none";
         }
@@ -120,12 +119,10 @@ public class GridElementButton extends Button {
                 cycleOneObject();
                 vibrate(25);
                 this.setText(getButtonTypeQueue().toString().toLowerCase());
-            }
-            else{
+            } else {
                 if(this.getText().length() != 0){
                     vibrate(25);
                     SocketManager.sendData(buttonTypeQueue.peek().getValue(), true);
-
                 }
             }
         }

@@ -79,10 +79,9 @@ public class EditPadActivity extends Activity {
         input.setLayoutParams(lp);
         input.setSingleLine();
 
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setView(input);
-        builder.setMessage("Name your custom layout.")
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setView(input)
+                .setMessage("Name your custom layout.")
                 .setPositiveButton("Save", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         try {
@@ -92,8 +91,7 @@ public class EditPadActivity extends Activity {
                             e.printStackTrace();
                         }
                     }
-                });
-        builder.show();
+                }).show();
     }
 
     public void clickedLoad(View v){
@@ -143,7 +141,6 @@ public class EditPadActivity extends Activity {
                         continue;
                     }
 
-
                     arrayRepresentation[i + OFFSET] = splittedString[i];
                 }
                 grid = GridLayoutManager.loadLayout((GridLayout)findViewById(R.id.rootGridLayout),arrayRepresentation,getApplicationContext());
@@ -157,18 +154,18 @@ public class EditPadActivity extends Activity {
 
         String ipAddress = getIntent().getStringExtra(EXTRA_IP);
         int port = getIntent().getIntExtra(EXTRA_PORT, 4848);
-        Intent i = GamepadActivity.generateIntent(this,ipAddress,port,grid);
+        Intent i = GamepadActivity.generateIntent(this, ipAddress, port, grid);
         startActivity(i);
-
     }
 
-    //util methods
+    /** Util methods **/
 
     public static int dpFromPx(float px){
         DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
         float dp = px / (metrics.densityDpi / 160f);
         return (int) dp;
     }
+
     public static int pxFromDp(float dp){
         DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
         float px = dp * (metrics.densityDpi / 160f);

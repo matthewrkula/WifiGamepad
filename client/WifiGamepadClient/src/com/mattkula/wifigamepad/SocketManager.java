@@ -14,8 +14,8 @@ public class SocketManager {
 
     private static Socket socket;
     private static DataOutputStream outputStream;
-    public static void connectToSocket(final Activity baseActivity, final String ipAddress, final int port){
 
+    public static void connectToSocket(final Activity baseActivity, final String ipAddress, final int port){
         new Thread(){
             @Override
             public void run() {
@@ -23,7 +23,6 @@ public class SocketManager {
                     socket = new Socket(ipAddress, port);
                     outputStream = new DataOutputStream(socket.getOutputStream());
                 } catch (ConnectException e){
-
                     sendData(-1, true);
                     baseActivity.finish();
                 } catch (Exception e){

@@ -38,6 +38,7 @@ public class FileUtil {
         osw.close();
         outputStream.close();
     }
+
     public static List<String> getContentsOf(String fileName, Context c) throws Exception {
         List<String> lines = new ArrayList<String>();
         BufferedReader br = new BufferedReader(new InputStreamReader(c.openFileInput(fileName)));
@@ -48,12 +49,11 @@ public class FileUtil {
 
         return lines;
     }
+
     public  static void clearFile(String fileName, FileOutputStream fileOutputStream) throws Exception {
         OutputStreamWriter osw = new OutputStreamWriter(fileOutputStream);
         osw.write("");
         osw.close();
         fileOutputStream.close();
     }
-
-
 }
