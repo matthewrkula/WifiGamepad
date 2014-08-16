@@ -38,6 +38,14 @@
         android:hint="IP Address"
         />
 
+    <ListView
+        android:id="@+id/list_controllers"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@+id/button_submit"
+        android:layout_marginTop="20dp"
+        android:choiceMode="singleChoice"
+        />
 
 </RelativeLayout>
 

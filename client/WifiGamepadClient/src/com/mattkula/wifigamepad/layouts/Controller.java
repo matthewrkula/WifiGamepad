@@ -1,5 +1,9 @@
 package com.mattkula.wifigamepad.layouts;
 
+import android.content.Context;
+
+import com.mattkula.wifigamepad.customlayouting.FileUtil;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -12,11 +16,13 @@ import java.util.Scanner;
  */
 public class Controller implements Serializable {
 
+    String name;
     int rowCount;
     int columnCount;
     ArrayList<ControllerButton> buttons;
 
-    public Controller(int rowCount, int columnCount) {
+    public Controller(String name, int rowCount, int columnCount) {
+        this.name = name;
         this.rowCount = rowCount;
         this.columnCount = columnCount;
         this.buttons = new ArrayList<ControllerButton>();
@@ -55,13 +61,20 @@ public class Controller implements Serializable {
         return columnCount;
     }
 
-    public void saveToFile(File file) throws IOException {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void save(Context c) throws IOException {
+        File file = new File(c.getDir(FileUtil.dirName, 0), getName());
         FileWriter writer = new FileWriter(file, false);
 
-        writer.write(Integer.toString(getRowCount()));
-        writer.write(" ");
-        writer.write(Integer.toString(getColumnCount()));
-        writer.write(" ");
+        writer.write(Integer.toString(getRowCount()) + " ");
+        writer.write(Integer.toString(getColumnCount()) + " ");
 
         for (ControllerButton button : buttons) {
             writer.write(button.getRow() + " ");
@@ -75,9 +88,10 @@ public class Controller implements Serializable {
 
     public static Controller loadFromFile(File file) throws IOException {
         Scanner scanner = new Scanner(file);
+        String name = file.getName();
         int boardRows = scanner.nextInt();
         int boardColumns = scanner.nextInt();
-        Controller board = new Controller(boardRows, boardColumns);
+        Controller board = new Controller(name, boardRows, boardColumns);
 
         int row, column, keycode;
         while (scanner.hasNextInt()) {

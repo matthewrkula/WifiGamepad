@@ -23,12 +23,11 @@ import java.util.List;
  */
 public class FileUtil {
 
-    private static final String dirName = "controllers";
+    public static final String dirName = "controllers";
 
-    public static void saveController(Context c, String name, Controller controller) {
-        File file = new File(c.getDir(dirName, 0), name);
+    public static void saveController(Context c, Controller controller) {
         try {
-            controller.saveToFile(file);
+            controller.save(c);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -55,20 +54,20 @@ public class FileUtil {
     }
 
     public static void saveSampleControllerIfNeeded(Context c, boolean overwrite) {
-        if (!new File(c.getDir(dirName, 0), "SampleController").exists() || overwrite) {
-            Controller controller = new Controller(7, 5);
+        if (!new File(c.getDir(dirName, 0), "Sample Controller").exists() || overwrite) {
+            Controller controller = new Controller("Sample Controller", 7, 5);
             controller.addButton(2, 0, Keybridge.getServerKeycode(KeyEvent.KEYCODE_DPAD_LEFT));
             controller.addButton(1, 1, Keybridge.getServerKeycode(KeyEvent.KEYCODE_DPAD_DOWN));
             controller.addButton(3, 1, Keybridge.getServerKeycode(KeyEvent.KEYCODE_DPAD_UP));
             controller.addButton(2, 2, Keybridge.getServerKeycode(KeyEvent.KEYCODE_DPAD_RIGHT));
             controller.addButton(2, 4, Keybridge.getServerKeycode('b'));
             controller.addButton(2, 6, Keybridge.getServerKeycode('a'));
-            FileUtil.saveController(c, "SampleController", controller);
+            FileUtil.saveController(c, controller);
         }
     }
 
     public static Controller loadSampleController(Context c) {
-        File f = new File(c.getDir(dirName, 0), "SampleController");
+        File f = new File(c.getDir(dirName, 0), "Sample Controller");
         if (f.exists()) {
             try {
                 return Controller.loadFromFile(f);
