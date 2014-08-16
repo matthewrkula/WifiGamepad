@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -98,16 +99,23 @@ public class GamepadActivity extends Activity {
     private class ButtonTouchListener implements View.OnTouchListener {
 
         int keycode;
-        public ButtonTouchListener(int keycode) {this.keycode = keycode;}
+        Vibrator vibrator;
+
+        public ButtonTouchListener(int keycode) {
+            this.keycode = keycode;
+            this.vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+        }
 
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
             switch (motionEvent.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     SocketManager.getInstance().sendData(keycode, true);
+                    vibrator.vibrate(25);
                     return true;
                 case MotionEvent.ACTION_UP:
                     SocketManager.getInstance().sendData(keycode, false);
+                    vibrator.vibrate(25);
                     return true;
             }
             return false;

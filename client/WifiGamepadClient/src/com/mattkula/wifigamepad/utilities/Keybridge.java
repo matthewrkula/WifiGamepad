@@ -12,6 +12,10 @@ public class Keybridge {
             return i;
         }
 
+        if (i > 96 && i < 123) {
+            return i - 32;
+        }
+
         switch(i) {
             case KeyEvent.KEYCODE_DPAD_LEFT:
                 return 0x25;

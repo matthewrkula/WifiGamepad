@@ -64,7 +64,7 @@ public class EditPadActivity extends Activity {
                 .setPositiveButton("Save", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         try {
-                            FileUtil.saveLayout(input.getText().toString(),getApplicationContext(), grid);
+//                            FileUtil.saveLayout(input.getText().toString(),getApplicationContext(), grid);
                         }
                         catch(Exception e){
                             e.printStackTrace();
@@ -78,7 +78,7 @@ public class EditPadActivity extends Activity {
         List<String> lines = null;
         //TODO: Make this error gracefully fix.
         try{
-            lines =  FileUtil.getContentsOf(fileName,this);
+//            lines =  FileUtil.getContentsOf(fileName,this);
         }
         catch(Exception e){
             e.printStackTrace();

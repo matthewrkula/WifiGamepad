@@ -44,10 +44,10 @@ public class SocketManager {
     public void disconnectFromSocket() {
         Log.v("NETWORKING", "Disconnecting from socket");
         try {
-            sendData(-1, true);
             if (outputStream != null) {
                 outputStream.close();
             }
+            sendData(-1, true);
             if (socket != null) {
                 socket.close();
             }

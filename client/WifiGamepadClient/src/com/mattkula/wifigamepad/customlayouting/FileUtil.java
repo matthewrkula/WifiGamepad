@@ -1,8 +1,10 @@
 package com.mattkula.wifigamepad.customlayouting;
 
 import android.content.Context;
+import android.view.KeyEvent;
 
 import com.mattkula.wifigamepad.layouts.Controller;
+import com.mattkula.wifigamepad.utilities.Keybridge;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -50,5 +52,30 @@ public class FileUtil {
         }
 
         return controllers;
+    }
+
+    public static void saveSampleControllerIfNeeded(Context c, boolean overwrite) {
+        if (!new File(c.getDir(dirName, 0), "SampleController").exists() || overwrite) {
+            Controller controller = new Controller(7, 5);
+            controller.addButton(2, 0, Keybridge.getServerKeycode(KeyEvent.KEYCODE_DPAD_LEFT));
+            controller.addButton(1, 1, Keybridge.getServerKeycode(KeyEvent.KEYCODE_DPAD_DOWN));
+            controller.addButton(3, 1, Keybridge.getServerKeycode(KeyEvent.KEYCODE_DPAD_UP));
+            controller.addButton(2, 2, Keybridge.getServerKeycode(KeyEvent.KEYCODE_DPAD_RIGHT));
+            controller.addButton(2, 4, Keybridge.getServerKeycode('b'));
+            controller.addButton(2, 6, Keybridge.getServerKeycode('a'));
+            FileUtil.saveController(c, "SampleController", controller);
+        }
+    }
+
+    public static Controller loadSampleController(Context c) {
+        File f = new File(c.getDir(dirName, 0), "SampleController");
+        if (f.exists()) {
+            try {
+                return Controller.loadFromFile(f);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 }
