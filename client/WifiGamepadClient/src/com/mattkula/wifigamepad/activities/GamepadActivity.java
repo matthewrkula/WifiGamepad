@@ -109,11 +109,11 @@ public class GamepadActivity extends Activity {
             switch (motionEvent.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     SocketManager.getInstance().sendData(keycode, true);
-                    vibrator.vibrate(25);
+                    vibrator.vibrate(10);
                     return true;
                 case MotionEvent.ACTION_UP:
                     SocketManager.getInstance().sendData(keycode, false);
-                    vibrator.vibrate(25);
+                    vibrator.vibrate(10);
                     return true;
             }
             return false;

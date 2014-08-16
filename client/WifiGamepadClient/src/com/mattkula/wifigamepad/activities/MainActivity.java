@@ -1,6 +1,7 @@
 package com.mattkula.wifigamepad.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,12 +27,14 @@ public class MainActivity extends Activity {
 
     Controller selectedController;
 
+    ControllerListAdapter adapter;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        FileUtil.saveSampleControllerIfNeeded(this, true);
+        FileUtil.saveSampleControllerIfNeeded(this, false);
 
         editIPAddress = (EditText)findViewById(R.id.edit_ip_input);
         editIPAddress.setText("10.0.0.4");
@@ -42,12 +45,23 @@ public class MainActivity extends Activity {
         editIPAddress.requestFocus();
 
         controllerList = (ListView)findViewById(R.id.list_controllers);
-        controllerList.setAdapter(new ControllerListAdapter());
+        adapter = new ControllerListAdapter(this);
+        controllerList.setAdapter(adapter);
         controllerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 controllerList.setSelection(i);
                 selectedController = (Controller)controllerList.getItemAtPosition(i);
+            }
+        });
+
+        controllerList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                selectedController = (Controller)controllerList.getItemAtPosition(i);
+                FileUtil.deleteSavedController(MainActivity.this, selectedController.getName());
+                adapter.notifyDataSetChanged();
+                return true;
             }
         });
 
@@ -69,8 +83,14 @@ public class MainActivity extends Activity {
 
         ArrayList<Controller> controllers;
 
-        public ControllerListAdapter() {
-            controllers = FileUtil.getSavedControllers(MainActivity.this);
+        public ControllerListAdapter(Context c) {
+            controllers = FileUtil.getSavedControllers(c);
+        }
+
+        @Override
+        public void notifyDataSetChanged() {
+            controllers = FileUtil.getSavedControllers(getApplicationContext());
+            super.notifyDataSetChanged();
         }
 
         @Override
