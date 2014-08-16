@@ -14,15 +14,11 @@ public class WifiGamepadServer {
 	
 	int desiredPort = 4848;
 	ServerSocket serverSocket;
-	Socket activeSocket;
 	
 	DataInputStream socketReader;
-	boolean isRunning = false;
+	boolean isRunning = true;
 	
-	Robot robot;
-	HashMap<Integer, Integer> keyMap;
-	
-	public WifiGamepadServer() throws UnknownHostException, IOException, AWTException {
+	public WifiGamepadServer() throws UnknownHostException, IOException {
 		boolean socketFound = false;
 		
 		while(!socketFound){
@@ -36,47 +32,23 @@ public class WifiGamepadServer {
 		
 		System.out.println("IPAddress: " + NetworkUtils.getIp());
 		System.out.println("Port: " + desiredPort);
-				
-		activeSocket = serverSocket.accept();
-		socketReader = new DataInputStream(activeSocket.getInputStream());
-		robot = new Robot();
 	}
 	
-	public void start() throws IOException {
-		System.out.println("Client connected!");
-		isRunning = true;
-		int button;
-		boolean isDown;
-		
-
-		while(isRunning) {
-			button = socketReader.readInt();
-			isDown = socketReader.readBoolean();
-			if(button == -1){
-				isRunning = false;
-			} else {
-				pressKey(button, isDown);
-			}
+	public void start() throws IOException, AWTException {
+		Socket activeSocket;
+		while (isRunning) {
+			activeSocket = serverSocket.accept();
+			new Thread(new Session(activeSocket)).start();
 		}
 	}
-	
-	public void pressKey(int i, boolean b){
-		int keyEvent = i;
-		System.out.println("Received key: " + i);
-		if(b){
 
-			robot.keyPress(keyEvent);
-		} else {
-			robot.keyRelease(keyEvent);
-		}
-	}
-	
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		try {
 			new WifiGamepadServer().start();
-		} catch (Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 	}
 
 }

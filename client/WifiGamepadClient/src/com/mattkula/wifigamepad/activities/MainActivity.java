@@ -1,4 +1,4 @@
-package com.mattkula.wifigamepad;
+package com.mattkula.wifigamepad.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,7 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.mattkula.wifigamepad.R;
 import com.mattkula.wifigamepad.customlayouting.EditPadActivity;
+import com.mattkula.wifigamepad.layouts.Controller;
 
 public class MainActivity extends Activity {
 
@@ -26,6 +28,10 @@ public class MainActivity extends Activity {
 
         editIPAddress.requestFocus();
 
+        final Controller controller = new Controller(7, 5);
+        controller.addButton(3, 3, 65);
+        controller.addButton(0, 0, 66);
+
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -33,7 +39,8 @@ public class MainActivity extends Activity {
                 String port = editPort.getText().toString();
                 if(ipAddress.matches("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}") &&
                         port.matches("\\d+")){
-                    Intent i = EditPadActivity.generateIntent(MainActivity.this, ipAddress, port);
+//                    Intent i = EditPadActivity.generateIntent(MainActivity.this, ipAddress, port);
+                    Intent i = GamepadActivity.generateIntent(MainActivity.this, ipAddress, Integer.parseInt(port), controller);
                     startActivity(i);
                 }
             }

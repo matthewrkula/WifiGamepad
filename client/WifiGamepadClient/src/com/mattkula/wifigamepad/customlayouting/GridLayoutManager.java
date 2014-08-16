@@ -32,7 +32,7 @@ public class GridLayoutManager {
         gridLayout.removeAllViews();
 
         int size[] = Grid.autoAdjustGridLayout(c,gridLayout);
-        Grid grid = new Grid(gridLayout,size[0],size[1]);
+        Grid grid = new Grid(gridLayout, size[0], size[1]);
         grid.fillGrid(c);
         List<GridElementButton> gridElements = grid.getElements();
 

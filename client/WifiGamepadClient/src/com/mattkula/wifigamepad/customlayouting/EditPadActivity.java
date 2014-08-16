@@ -7,15 +7,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.Point;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.Display;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -23,26 +16,12 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
-import com.mattkula.wifigamepad.GamepadActivity;
+import com.mattkula.wifigamepad.activities.GamepadActivity;
 import com.mattkula.wifigamepad.R;
 
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class EditPadActivity extends Activity {
 
@@ -152,10 +131,10 @@ public class EditPadActivity extends Activity {
     public void clickedStart(View v){
         //TODO: I should probably send it as a parcelable but it's probably too much work anyways.
 
-        String ipAddress = getIntent().getStringExtra(EXTRA_IP);
-        int port = getIntent().getIntExtra(EXTRA_PORT, 4848);
-        Intent i = GamepadActivity.generateIntent(this, ipAddress, port, grid);
-        startActivity(i);
+//        String ipAddress = getIntent().getStringExtra(EXTRA_IP);
+//        int port = getIntent().getIntExtra(EXTRA_PORT, 4848);
+//        Intent i = GamepadActivity.generateIntent(this, ipAddress, port, grid);
+//        startActivity(i);
     }
 
     /** Util methods **/

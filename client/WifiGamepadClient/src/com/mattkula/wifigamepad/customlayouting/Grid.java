@@ -69,13 +69,13 @@ public class Grid {
     }
 
     //Returns size of grid
-    public static int[] autoAdjustGridLayout(Context c,GridLayout g){
+    public static int[] autoAdjustGridLayout(Context c, GridLayout g){
 
         final int INTENDED_SIZE_OF_BUTTON = 70;
         int width,height;
         DisplayMetrics metrics = c.getResources().getDisplayMetrics();
-         width = metrics.widthPixels;
-         height = metrics.heightPixels;
+        width = metrics.widthPixels;
+        height = metrics.heightPixels;
 
         width = EditPadActivity.dpFromPx(width);
         height = EditPadActivity.dpFromPx(height);
@@ -83,10 +83,8 @@ public class Grid {
         int amountOfRows = height/INTENDED_SIZE_OF_BUTTON;
         int amountOfCols = width/INTENDED_SIZE_OF_BUTTON;
 
-        GridLayout gridLayout = g;
-
-        gridLayout.setColumnCount(amountOfCols);
-        gridLayout.setRowCount(amountOfRows);
+        g.setColumnCount(amountOfCols);
+        g.setRowCount(amountOfRows);
         return new int[]{amountOfCols,amountOfRows};
     }
 }

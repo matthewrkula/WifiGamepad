@@ -15,6 +15,7 @@ import com.mattkula.wifigamepad.SocketManager;
 
 import java.io.Serializable;
 import java.net.Socket;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -78,9 +79,7 @@ public class GridElementButton extends Button {
     private void fillQueueWithDefaultData(){
         //Clearing the queue to make sure that nothing else is in the queue before adding more button types.
         buttonTypeQueue.clear();
-        for(ButtonType buttonType : ButtonType.values()){
-            buttonTypeQueue.add(buttonType);
-        }
+        buttonTypeQueue.addAll(Arrays.asList(ButtonType.values()));
     }
 
     private void setParamsOfButton(){
@@ -113,22 +112,22 @@ public class GridElementButton extends Button {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         super.onTouchEvent(event);
-        gestureDetector.onTouchEvent(event);
-        if(event.getAction() == MotionEvent.ACTION_DOWN){
-            if(!isGamePad) {
-                cycleOneObject();
-                vibrate(25);
-                this.setText(getButtonTypeQueue().toString().toLowerCase());
-            } else {
-                if(this.getText().length() != 0){
-                    vibrate(25);
-                    SocketManager.sendData(buttonTypeQueue.peek().getValue(), true);
-                }
-            }
-        }
-        else if(event.getAction() == MotionEvent.ACTION_CANCEL){
-            SocketManager.sendData(buttonTypeQueue.peek().getValue(),false);
-        }
+//        gestureDetector.onTouchEvent(event);
+//        if(event.getAction() == MotionEvent.ACTION_DOWN){
+//            if(!isGamePad) {
+//                cycleOneObject();
+//                vibrate(25);
+//                this.setText(getButtonTypeQueue().toString().toLowerCase());
+//            } else {
+//                if(this.getText().length() != 0){
+//                    vibrate(25);
+//                    SocketManager.sendData(buttonTypeQueue.peek().getValue(), true);
+//                }
+//            }
+//        }
+//        else if(event.getAction() == MotionEvent.ACTION_CANCEL){
+//            SocketManager.sendData(buttonTypeQueue.peek().getValue(),false);
+//        }
         return true;
     }
 
