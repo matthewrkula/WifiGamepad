@@ -21,7 +21,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        FileUtil.saveSampleControllerIfNeeded(this, true);
+        FileUtil.saveSampleControllerIfNeeded(this, false);
 
         editIPAddress = (EditText)findViewById(R.id.edit_ip_input);
         editIPAddress.setText("10.0.0.4");

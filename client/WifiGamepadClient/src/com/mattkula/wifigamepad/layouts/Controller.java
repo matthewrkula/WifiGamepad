@@ -19,7 +19,7 @@ public class Controller implements Serializable {
     public Controller(int rowCount, int columnCount) {
         this.rowCount = rowCount;
         this.columnCount = columnCount;
-        buttons = new ArrayList<ControllerButton>();
+        this.buttons = new ArrayList<ControllerButton>();
     }
 
     public int addButton(int row, int column, int keyCode) {

@@ -19,6 +19,7 @@ import com.mattkula.wifigamepad.SocketManager;
 
 import com.mattkula.wifigamepad.layouts.Controller;
 import com.mattkula.wifigamepad.layouts.ControllerButton;
+import com.mattkula.wifigamepad.utilities.ColorUtil;
 
 /**
  * Created by matt on 6/21/14.
@@ -47,9 +48,6 @@ public class GamepadActivity extends Activity {
         ipAddress = b.getString(EXTRA_IP);
         controller = (Controller)b.getSerializable(EXTRA_CONTROLLER);
         populateGridview();
-
-//        Grid.autoAdjustGridLayout(this,(GridLayout)findViewById(R.id.gamePadGridLayout));
-//        GridLayoutManager.loadLayoutGamepad(((GridLayout)findViewById(R.id.gamePadGridLayout)),elements,this);
     }
 
     @Override
@@ -81,7 +79,7 @@ public class GamepadActivity extends Activity {
                                 height / controller.getRowCount()));
                 if (button != null) {
                     v.setOnTouchListener(new ButtonTouchListener(button.getKeyCode()));
-                    v.setBackgroundColor(getResources().getColor(android.R.color.holo_purple));
+                    v.setBackgroundColor(ColorUtil.colorForKeycode(this, button.getKeyCode()));
                 }
                 gridLayout.addView(v);
             }

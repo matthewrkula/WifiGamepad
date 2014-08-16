@@ -122,7 +122,7 @@ public class EditPadActivity extends Activity {
 
                     arrayRepresentation[i + OFFSET] = splittedString[i];
                 }
-                grid = GridLayoutManager.loadLayout((GridLayout)findViewById(R.id.rootGridLayout),arrayRepresentation,getApplicationContext());
+//                grid = GridLayoutManager.loadLayout((GridLayout)findViewById(R.id.rootGridLayout),arrayRepresentation,getApplicationContext());
             }
         });
 
