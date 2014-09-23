@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mattkula.wifigamepad.R;
 import com.mattkula.wifigamepad.utilities.FileUtil;
@@ -76,8 +77,11 @@ public class MainActivity extends Activity {
                 String ipAddress = editIPAddress.getText().toString();
                 String port = editPort.getText().toString();
                 if(ipAddress.matches("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}") &&
-                        port.matches("\\d+") &&
-                        selectedController != null) {
+                        port.matches("\\d+")) {
+                    if (selectedController == null) {
+                        Toast.makeText(MainActivity.this, "Please select or make a controller.", Toast.LENGTH_LONG).show();
+                        return;
+                    }
                     Intent i = GamepadActivity.generateIntent(MainActivity.this, ipAddress, Integer.parseInt(port), selectedController);
                     startActivity(i);
                 }

@@ -47,12 +47,12 @@ public class FileUtil {
     public static void saveSampleControllerIfNeeded(Context c, boolean overwrite) {
         if (!new File(c.getDir(dirName, 0), "Sample Controller").exists() || overwrite) {
             Controller controller = new Controller("Sample Controller", 7, 5);
-            controller.addButton(2, 0, KeybridgeUtil.getServerKeycode(KeyEvent.KEYCODE_DPAD_LEFT));
+            controller.addButton(0, 2, KeybridgeUtil.getServerKeycode(KeyEvent.KEYCODE_DPAD_LEFT));
             controller.addButton(1, 1, KeybridgeUtil.getServerKeycode(KeyEvent.KEYCODE_DPAD_DOWN));
-            controller.addButton(3, 1, KeybridgeUtil.getServerKeycode(KeyEvent.KEYCODE_DPAD_UP));
+            controller.addButton(1, 3, KeybridgeUtil.getServerKeycode(KeyEvent.KEYCODE_DPAD_UP));
             controller.addButton(2, 2, KeybridgeUtil.getServerKeycode(KeyEvent.KEYCODE_DPAD_RIGHT));
-            controller.addButton(2, 4, KeybridgeUtil.getServerKeycode('b'));
-            controller.addButton(2, 6, KeybridgeUtil.getServerKeycode('a'));
+            controller.addButton(4, 2, KeybridgeUtil.getServerKeycode('b'));
+            controller.addButton(6, 2, KeybridgeUtil.getServerKeycode('a'));
             FileUtil.saveController(c, controller);
         }
     }
