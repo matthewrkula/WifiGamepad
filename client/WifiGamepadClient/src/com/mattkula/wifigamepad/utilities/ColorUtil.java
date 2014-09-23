@@ -1,6 +1,7 @@
 package com.mattkula.wifigamepad.utilities;
 
 import android.content.Context;
+import android.util.Log;
 
 /**
  * Created by matt on 8/16/14.
@@ -22,6 +23,7 @@ public class ColorUtil {
     };
 
     public static int colorForKeycode(Context c, int keycode) {
+        Log.v("WTFMATT", "" + c.getResources().getColor(colors[keycode % colors.length]));
         return c.getResources().getColor(colors[keycode % colors.length]);
     }
 }

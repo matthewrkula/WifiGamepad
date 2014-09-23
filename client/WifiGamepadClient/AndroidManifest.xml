@@ -26,7 +26,7 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
         <activity
-            android:name=".customlayouting.EditPadActivity"
+            android:name=".activities.EditPadActivity"
             android:label="@string/title_activity_edit_pad"
             android:screenOrientation="portrait">
         </activity>

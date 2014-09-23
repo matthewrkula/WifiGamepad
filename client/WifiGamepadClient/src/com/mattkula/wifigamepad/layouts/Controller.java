@@ -2,7 +2,7 @@ package com.mattkula.wifigamepad.layouts;
 
 import android.content.Context;
 
-import com.mattkula.wifigamepad.customlayouting.FileUtil;
+import com.mattkula.wifigamepad.utilities.FileUtil;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -15,6 +15,9 @@ import java.util.Scanner;
  * Created by matt on 8/15/14.
  */
 public class Controller implements Serializable {
+
+    public static final int DEFAULT_ROWS = 7;
+    public static final int DEFAULT_COLS = 5;
 
     String name;
     int rowCount;
@@ -59,6 +62,14 @@ public class Controller implements Serializable {
 
     public int getColumnCount() {
         return columnCount;
+    }
+
+    public void setRowCount(int rowCount) {
+        this.rowCount = rowCount;
+    }
+
+    public void setColumnCount(int columnCount) {
+        this.columnCount = columnCount;
     }
 
     public String getName() {

@@ -2,51 +2,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mattkula.wifigamepad.customlayouting.EditPadActivity">
+    android:orientation="vertical"
+    tools:context="com.mattkula.wifigamepad.activities.EditPadActivity">
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/rootGridLayout"
+        android:layout_gravity="center_horizontal"
+        android:background="@android:color/holo_blue_dark"
+        android:useDefaultMargins="true"
+        />
+
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:orientation="vertical">
-        <GridLayout
+        android:layout_height="50dp"
+        >
+
+        <Button
+            android:id="@+id/btn_save"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id = "@+id/rootGridLayout"
-            android:layout_gravity="center_horizontal"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/black"
+            android:text="Save"
             />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="20dp"
-            >
-
-            <Button
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:layout_marginRight = "10dp"
-                android:text = "Save"
-                android:onClick="clickedSave"/>
-
-            <Button
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-
-                android:layout_marginRight = "10dp"
-                android:text = "Load"
-                android:onClick="clickedLoad"/>
-            <Button
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-
-                android:text = "Start"
-                android:onClick="clickedStart"
-
-                />
-
-            </LinearLayout>
-
 
     </LinearLayout>
 

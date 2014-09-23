@@ -6,13 +6,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.GridLayout;
-import android.widget.Space;
 
 import com.mattkula.wifigamepad.R;
 import com.mattkula.wifigamepad.SocketManager;
@@ -39,14 +36,14 @@ public class GamepadActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.gamepad);
+        setContentView(R.layout.activity_gamepad);
 
         gridLayout = (GridLayout)findViewById(R.id.gamePadGridLayout);
 
-        Bundle b = this.getIntent().getExtras();
-        port = b.getInt(EXTRA_PORT, 4848);
-        ipAddress = b.getString(EXTRA_IP);
-        controller = (Controller)b.getSerializable(EXTRA_CONTROLLER);
+        Bundle extras = this.getIntent().getExtras();
+        port = extras.getInt(EXTRA_PORT, 4848);
+        ipAddress = extras.getString(EXTRA_IP);
+        controller = (Controller)extras.getSerializable(EXTRA_CONTROLLER);
         populateGridview();
     }
 
@@ -70,9 +67,9 @@ public class GamepadActivity extends Activity {
         int width = metrics.widthPixels;
         int height = metrics.heightPixels;
 
-        for (int y = 0; y < controller.getRowCount(); y++) {
-            for (int x = 0; x < controller.getColumnCount(); x++) {
-                ControllerButton button = controller.buttonAt(x, y);
+        for (int row = 0; row < controller.getRowCount(); row++) {
+            for (int col = 0; col < controller.getColumnCount(); col++) {
+                ControllerButton button = controller.buttonAt(row, col);
                 View v = new View(this);
                 v.setLayoutParams(
                         new ViewGroup.LayoutParams(width / controller.getColumnCount(),

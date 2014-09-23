@@ -1,10 +1,14 @@
 package com.mattkula.wifigamepad.activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -15,7 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.mattkula.wifigamepad.R;
-import com.mattkula.wifigamepad.customlayouting.FileUtil;
+import com.mattkula.wifigamepad.utilities.FileUtil;
 import com.mattkula.wifigamepad.layouts.Controller;
 
 import java.util.ArrayList;
@@ -32,12 +36,12 @@ public class MainActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
+        setContentView(R.layout.activity_main);
 
         FileUtil.saveSampleControllerIfNeeded(this, false);
 
         editIPAddress = (EditText)findViewById(R.id.edit_ip_input);
-        editIPAddress.setText("10.0.0.4");
+        editIPAddress.setText("192.168.1.67");
         editPort = (EditText)findViewById(R.id.edit_port);
         editPort.setText("4848");
         Button btnSubmit = (Button)findViewById(R.id.button_submit);
@@ -58,9 +62,10 @@ public class MainActivity extends Activity {
         controllerList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedController = (Controller)controllerList.getItemAtPosition(i);
-                FileUtil.deleteSavedController(MainActivity.this, selectedController.getName());
+                Controller deletedController = (Controller)controllerList.getItemAtPosition(i);
+                FileUtil.deleteSavedController(MainActivity.this, deletedController.getName());
                 adapter.notifyDataSetChanged();
+                selectedController = null;
                 return true;
             }
         });
@@ -71,12 +76,61 @@ public class MainActivity extends Activity {
                 String ipAddress = editIPAddress.getText().toString();
                 String port = editPort.getText().toString();
                 if(ipAddress.matches("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}") &&
-                        port.matches("\\d+") && selectedController != null){
+                        port.matches("\\d+") &&
+                        selectedController != null) {
                     Intent i = GamepadActivity.generateIntent(MainActivity.this, ipAddress, Integer.parseInt(port), selectedController);
                     startActivity(i);
                 }
             }
         });
+    }
+
+    private void startEditPadActivity(String filename) {
+        String ipAddress = editIPAddress.getText().toString();
+        String port = editPort.getText().toString();
+        Intent i = EditPadActivity.generateIntent(MainActivity.this, ipAddress, port, filename);
+        startActivity(i);
+    }
+
+    private void showNewNameDialog() {
+        final EditText input = new EditText(this);
+        new AlertDialog.Builder(this)
+                .setTitle("Enter New Name")
+                .setMessage("Please enter the name of your new controller.")
+                .setView(input)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        String inputText = input.getText().toString();
+                        startEditPadActivity(inputText);
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.dismiss();
+                    }
+                }).show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_item_new_controller:
+                showNewNameDialog();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     private class ControllerListAdapter extends BaseAdapter {

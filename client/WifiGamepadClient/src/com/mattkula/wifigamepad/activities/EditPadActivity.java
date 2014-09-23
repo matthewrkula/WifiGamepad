@@ -1,0 +1,164 @@
+package com.mattkula.wifigamepad.activities;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Build;
+import android.os.Bundle;
+import android.text.InputFilter;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.GestureDetector;
+import android.view.Gravity;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.GridLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.mattkula.wifigamepad.R;
+import com.mattkula.wifigamepad.layouts.Controller;
+import com.mattkula.wifigamepad.layouts.ControllerButton;
+import com.mattkula.wifigamepad.utilities.ColorUtil;
+import com.mattkula.wifigamepad.utilities.FileUtil;
+import com.mattkula.wifigamepad.utilities.KeybridgeUtil;
+import com.mattkula.wifigamepad.views.PositionAwareView;
+
+import org.w3c.dom.Text;
+
+public class EditPadActivity extends Activity {
+
+    public static final String EXTRA_IP = "ipaddress";
+    public static final String EXTRA_PORT = "port";
+    public static final String EXTRA_NAME = "name";
+
+    private Controller controller;
+
+    private GridLayout gridLayout;
+    private Button saveButton;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.activity_edit_pad);
+
+        Bundle extras = getIntent().getExtras();
+        String name = extras.getString(EXTRA_NAME);
+
+        controller = new Controller(name, Controller.DEFAULT_ROWS, Controller.DEFAULT_COLS);
+
+        gridLayout = (GridLayout)findViewById(R.id.rootGridLayout);
+        gridLayout.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {  // Need this so grid layout can be measured.
+            @Override
+            public boolean onPreDraw() {
+                gridLayout.getViewTreeObserver().removeOnPreDrawListener(this);
+                populateGridview();
+                return true;
+            }
+        });
+        saveButton = (Button)findViewById(R.id.btn_save);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FileUtil.saveController(getApplicationContext(), controller);
+                finish();
+            }
+        });
+    }
+
+    public void populateGridview() {
+        gridLayout.removeAllViews();
+        gridLayout.setColumnCount(controller.getColumnCount());
+        gridLayout.setRowCount(controller.getRowCount());
+
+        for (int row = 0; row < controller.getRowCount(); row++) {
+            for (int col = 0; col < controller.getColumnCount(); col++) {
+                ControllerButton button = controller.buttonAt(row, col);
+                TextView v = new TextView(this);
+                v.setLayoutParams(
+                        new ViewGroup.LayoutParams(gridLayout.getWidth() / controller.getColumnCount(),
+                                gridLayout.getHeight() / controller.getRowCount()));
+                v.setGravity(Gravity.CENTER);
+                v.setOnClickListener(new ButtonClickListener(row, col));
+                v.setBackgroundResource(R.drawable.bordered_background);
+
+                if (button != null) {
+                    v.setText(Character.toString((char) button.getKeyCode()));
+                }
+                gridLayout.addView(v);
+            }
+        }
+    }
+
+    private void showPickerDialog(final int row, final int column) {
+        String[] choices = {"Letter Or Number", "Arrow or Other Key"};
+        AlertDialog dialog = new AlertDialog.Builder(this).setItems(choices, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if (i == 0) {
+                    showCharacterDialog(row, column);
+                }
+                dialogInterface.dismiss();
+            }
+        }).create();
+        dialog.show();
+    }
+
+    private void showCharacterDialog(final int row, final int column) {
+        final EditText input = new EditText(this);
+        input.setFilters(new InputFilter[]{new InputFilter.LengthFilter(1)});
+        new AlertDialog.Builder(this)
+                .setTitle("Enter Button")
+                .setMessage("Enter the key that this button should 'press'.")
+                .setView(input)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        String inputText = input.getText().toString();
+                        if (inputText.length() == 1) {
+                            int charcode = KeybridgeUtil.getServerKeycode(inputText.charAt(0));
+                            controller.addButton(row, column, charcode);
+                            populateGridview();
+                            dialog.dismiss();
+                        }
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.dismiss();
+                    }
+                }).show();
+
+    }
+
+    private class ButtonClickListener implements View.OnClickListener {
+        int column;
+        int row;
+
+        public ButtonClickListener(int row, int col) {
+            this.column = col;
+            this.row = row;
+        }
+
+        @Override
+        public void onClick(View view) {
+            showPickerDialog(row, column);
+        }
+    }
+
+    public static Intent generateIntent(Context c, String ipAddress, String port, String name){
+        Intent i = new Intent(c, EditPadActivity.class);
+        i.putExtra(EXTRA_IP, ipAddress);
+        i.putExtra(EXTRA_PORT, Integer.parseInt(port));
+        i.putExtra(EXTRA_NAME, name);
+        return i;
+    }
+}

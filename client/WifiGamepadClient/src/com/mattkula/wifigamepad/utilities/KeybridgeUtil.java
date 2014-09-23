@@ -5,7 +5,7 @@ import android.view.KeyEvent;
 /**
  * Created by matt on 7/27/14.
  */
-public class Keybridge {
+public class KeybridgeUtil {
 
     public static int getServerKeycode(int i) {
         if (i > 64 && i < 91) {
