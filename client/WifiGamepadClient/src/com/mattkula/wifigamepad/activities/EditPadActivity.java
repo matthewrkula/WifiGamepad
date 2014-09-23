@@ -5,14 +5,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.InputFilter;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.GestureDetector;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -20,19 +15,14 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
-import android.widget.LinearLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mattkula.wifigamepad.R;
 import com.mattkula.wifigamepad.layouts.Controller;
 import com.mattkula.wifigamepad.layouts.ControllerButton;
-import com.mattkula.wifigamepad.utilities.ColorUtil;
 import com.mattkula.wifigamepad.utilities.FileUtil;
 import com.mattkula.wifigamepad.utilities.KeybridgeUtil;
-import com.mattkula.wifigamepad.views.PositionAwareView;
-
-import org.w3c.dom.Text;
 
 public class EditPadActivity extends Activity {
 
@@ -43,7 +33,8 @@ public class EditPadActivity extends Activity {
     private Controller controller;
 
     private GridLayout gridLayout;
-    private Button saveButton;
+    private ImageButton saveButton;
+    private Button btnMoreCols, btnLessCols, btnMoreRows, btnLessRows;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,12 +56,45 @@ public class EditPadActivity extends Activity {
                 return true;
             }
         });
-        saveButton = (Button)findViewById(R.id.btn_save);
+        saveButton = (ImageButton)findViewById(R.id.btn_save);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 FileUtil.saveController(getApplicationContext(), controller);
                 finish();
+            }
+        });
+
+        btnMoreCols = (Button)findViewById(R.id.btn_more_cols);
+        btnMoreCols.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                controller.setColumnCount(controller.getColumnCount() + 1);
+                populateGridview();
+            }
+        });
+        btnLessCols = (Button)findViewById(R.id.btn_less_cols);
+        btnLessCols.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                controller.setColumnCount(controller.getColumnCount() - 1);
+                populateGridview();
+            }
+        });
+        btnMoreRows = (Button)findViewById(R.id.btn_more_rows);
+        btnMoreRows.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                controller.setRowCount(controller.getRowCount() + 1);
+                populateGridview();
+            }
+        });
+        btnLessRows = (Button)findViewById(R.id.btn_less_rows);
+        btnLessRows.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                controller.setRowCount(controller.getRowCount() - 1);
+                populateGridview();
             }
         });
     }

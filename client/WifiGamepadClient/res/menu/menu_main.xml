@@ -5,7 +5,7 @@
     <item
         android:id="@+id/menu_item_new_controller"
         android:title="New Controller"
-        android:icon="@android:drawable/btn_plus"
+        android:icon="@drawable/ic_action_new"
         android:showAsAction="always"/>
 
 </menu>
