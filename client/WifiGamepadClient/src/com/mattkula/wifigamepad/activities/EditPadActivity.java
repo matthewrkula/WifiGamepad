@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputFilter;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -23,6 +24,8 @@ import com.mattkula.wifigamepad.layouts.Controller;
 import com.mattkula.wifigamepad.layouts.ControllerButton;
 import com.mattkula.wifigamepad.utilities.FileUtil;
 import com.mattkula.wifigamepad.utilities.KeybridgeUtil;
+
+import java.util.HashMap;
 
 public class EditPadActivity extends Activity {
 
@@ -77,8 +80,10 @@ public class EditPadActivity extends Activity {
         btnLessCols.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                controller.setColumnCount(controller.getColumnCount() - 1);
-                populateGridview();
+                if (controller.getColumnCount() > 1) {
+                    controller.setColumnCount(controller.getColumnCount() - 1);
+                    populateGridview();
+                }
             }
         });
         btnMoreRows = (Button)findViewById(R.id.btn_more_rows);
@@ -93,8 +98,10 @@ public class EditPadActivity extends Activity {
         btnLessRows.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                controller.setRowCount(controller.getRowCount() - 1);
-                populateGridview();
+                if (controller.getRowCount() > 1) {
+                    controller.setRowCount(controller.getRowCount() - 1);
+                    populateGridview();
+                }
             }
         });
     }
@@ -108,6 +115,7 @@ public class EditPadActivity extends Activity {
             for (int col = 0; col < controller.getColumnCount(); col++) {
                 ControllerButton button = controller.buttonAt(row, col);
                 TextView v = new TextView(this);
+                v.setTextSize(20);
                 v.setLayoutParams(
                         new ViewGroup.LayoutParams(gridLayout.getWidth() / controller.getColumnCount(),
                                 gridLayout.getHeight() / controller.getRowCount()));
@@ -116,7 +124,7 @@ public class EditPadActivity extends Activity {
                 v.setBackgroundResource(R.drawable.bordered_background);
 
                 if (button != null) {
-                    v.setText(Character.toString((char) button.getKeyCode()));
+                    v.setText(KeybridgeUtil.getCharForKeycode(button.getKeyCode()));
                 }
                 gridLayout.addView(v);
             }
@@ -130,6 +138,8 @@ public class EditPadActivity extends Activity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 if (i == 0) {
                     showCharacterDialog(row, column);
+                } else if (i == 1) {
+                    showSpecialKeyDialog(row, column);
                 }
                 dialogInterface.dismiss();
             }
@@ -161,6 +171,27 @@ public class EditPadActivity extends Activity {
                     }
                 }).show();
 
+    }
+
+    private void showSpecialKeyDialog(final int row, final int column) {
+        final String[] choices = {"Right Arrow", "Left Arrow", "Up Arrow", "Down Arrow"};
+
+        final HashMap<String, Integer> hashMap = new HashMap<String, Integer>();
+        hashMap.put("Right Arrow", KeybridgeUtil.getServerKeycode(KeyEvent.KEYCODE_DPAD_RIGHT));
+        hashMap.put("Left Arrow", KeybridgeUtil.getServerKeycode(KeyEvent.KEYCODE_DPAD_LEFT));
+        hashMap.put("Up Arrow", KeybridgeUtil.getServerKeycode(KeyEvent.KEYCODE_DPAD_UP));
+        hashMap.put("Down Arrow", KeybridgeUtil.getServerKeycode(KeyEvent.KEYCODE_DPAD_DOWN));
+
+        AlertDialog dialog = new AlertDialog.Builder(this).setItems(choices, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Integer charCode = hashMap.get(choices[i]);
+                controller.addButton(row, column, charCode);
+                populateGridview();
+                dialogInterface.dismiss();
+            }
+        }).create();
+        dialog.show();
     }
 
     private class ButtonClickListener implements View.OnClickListener {
