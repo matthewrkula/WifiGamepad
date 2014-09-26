@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="WhiteEditText" parent="android:Widget.EditText">
+        <item name="android:background">@drawable/edittext_background</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textColor">#ff888888</item>
+        <item name="android:textColorHint">#88888888</item>
+    </style>
+</resources>
