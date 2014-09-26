@@ -12,7 +12,7 @@ public class KeybridgeUtil {
             return i;
         }
 
-        if (i > 96 && i < 123) {
+        if (i > 0x60 && i < 0x7b) {
             return i - 32;
         }
 
