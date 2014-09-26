@@ -23,7 +23,6 @@ public class ColorUtil {
     };
 
     public static int colorForKeycode(Context c, int keycode) {
-        Log.v("WTFMATT", "" + c.getResources().getColor(colors[keycode % colors.length]));
         return c.getResources().getColor(colors[keycode % colors.length]);
     }
 }

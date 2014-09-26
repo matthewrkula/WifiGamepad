@@ -105,7 +105,9 @@ public class MainActivity extends Activity {
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         String inputText = input.getText().toString();
-                        startEditPadActivity(inputText);
+                        if (!inputText.isEmpty()) {
+                            startEditPadActivity(inputText);
+                        }
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
