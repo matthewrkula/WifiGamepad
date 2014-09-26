@@ -8,7 +8,7 @@ import android.view.KeyEvent;
 public class KeybridgeUtil {
 
     public static int getServerKeycode(int i) {
-        if (i > 64 && i < 91) {
+        if (i > 0x20 && i < 0x61) {
             return i;
         }
 
