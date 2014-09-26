@@ -21,7 +21,7 @@ import com.mattkula.wifigamepad.utilities.ColorUtil;
 /**
  * Created by matt on 6/21/14.
  */
-public class GamepadActivity extends Activity {
+public class GamepadActivity extends Activity implements SocketManager.SocketManagerConnectionListener {
 
     public static final String EXTRA_IP = "ipaddress";
     public static final String EXTRA_PORT = "port";
@@ -29,6 +29,7 @@ public class GamepadActivity extends Activity {
 
     private GridLayout gridLayout;
     private Controller controller;
+    private SocketManager socketManager;
 
     String ipAddress;
     int port;
@@ -37,6 +38,8 @@ public class GamepadActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gamepad);
+
+        socketManager = SocketManager.getInstance();
 
         gridLayout = (GridLayout)findViewById(R.id.gamePadGridLayout);
 
@@ -50,13 +53,22 @@ public class GamepadActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        SocketManager.getInstance().connectToSocket(ipAddress, port);
+        socketManager.connectToSocket(ipAddress, port);
+        socketManager.setListener(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        SocketManager.getInstance().disconnectFromSocket();
+        if (SocketManager.getInstance().isConnected()) {
+            SocketManager.getInstance().disconnectFromSocket();
+        }
+        socketManager.setListener(null);
+    }
+
+    @Override
+    public void onSocketDisconnected() {
+        this.finish();
     }
 
     public void populateGridview() {

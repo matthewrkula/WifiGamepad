@@ -12,16 +12,28 @@ import java.net.Socket;
  * Created by Stefan on 7/27/2014.
  */
 public class SocketManager {
+    public enum ConnectionState {
+        DISCONNECTED,
+        CONNECTED
+    }
 
-    private static Socket socket;
     private static DataOutputStream outputStream;
     private static SocketManager socketManager;
+    private static Socket socket;
+
+    private ConnectionState state;
+    private SocketManagerConnectionListener listener;
 
     public static SocketManager getInstance() {
         if (socketManager == null) {
             socketManager = new SocketManager();
+            socketManager.state = ConnectionState.DISCONNECTED;
         }
         return socketManager;
+    }
+
+    public boolean isConnected() {
+        return this.state == ConnectionState.CONNECTED;
     }
 
     public void connectToSocket(final String ipAddress, final int port){
@@ -31,6 +43,7 @@ public class SocketManager {
                 try {
                     socket = new Socket(ipAddress, port);
                     outputStream = new DataOutputStream(socket.getOutputStream());
+                    state = ConnectionState.CONNECTED;
                 } catch (ConnectException e){
                     disconnectFromSocket();
                 } catch (Exception e){
@@ -43,7 +56,11 @@ public class SocketManager {
 
     public void disconnectFromSocket() {
         Log.v("NETWORKING", "Disconnecting from socket");
+        this.state = ConnectionState.DISCONNECTED;
         try {
+            if (listener != null) {
+                listener.onSocketDisconnected();
+            }
             if (outputStream != null) {
                 outputStream.close();
             }
@@ -74,5 +91,13 @@ public class SocketManager {
         } else {
             Log.e("NETWORKING", "Socket not connected.");
         }
+    }
+
+    public void setListener(SocketManagerConnectionListener listener) {
+        this.listener = listener;
+    }
+
+    public interface SocketManagerConnectionListener {
+        public void onSocketDisconnected();
     }
 }
