@@ -24,6 +24,7 @@ import com.mattkula.wifigamepad.layouts.Controller;
 import com.mattkula.wifigamepad.layouts.ControllerButton;
 import com.mattkula.wifigamepad.utilities.FileUtil;
 import com.mattkula.wifigamepad.utilities.KeybridgeUtil;
+import com.mattkula.wifigamepad.views.AllerTextView;
 
 import java.util.HashMap;
 
@@ -114,7 +115,7 @@ public class EditPadActivity extends Activity {
         for (int row = 0; row < controller.getRowCount(); row++) {
             for (int col = 0; col < controller.getColumnCount(); col++) {
                 ControllerButton button = controller.buttonAt(row, col);
-                TextView v = new TextView(this);
+                AllerTextView v = new AllerTextView(this);
                 v.setTextSize(20);
                 v.setLayoutParams(
                         new ViewGroup.LayoutParams(gridLayout.getWidth() / controller.getColumnCount(),

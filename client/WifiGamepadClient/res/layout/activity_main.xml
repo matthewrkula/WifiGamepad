@@ -15,6 +15,7 @@
         android:inputType="numberDecimal"
         android:digits="0123456789."
         android:hint="IP Address"
+        style="@style/WhiteEditText"
         />
 
     <EditText
@@ -24,13 +25,16 @@
         android:layout_marginBottom="20dp"
         android:inputType="number"
         android:hint="Port"
+        style="@style/WhiteEditText"
         />
 
     <Button
         android:id="@+id/button_submit"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:text="Okay"
+        android:background="@drawable/button_background"
+        android:textColor="@android:color/white"
+        android:text="Let's Go!"
         />
 
     <ListView
