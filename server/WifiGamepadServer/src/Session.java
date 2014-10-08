@@ -4,9 +4,6 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-import javax.security.auth.login.FailedLoginException;
-
-
 public class Session implements Runnable {
 	
 	Robot robot;
