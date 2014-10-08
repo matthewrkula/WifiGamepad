@@ -1,7 +1,6 @@
 package com.mattkula.wifigamepad.utilities;
 
 import android.content.Context;
-import android.util.Log;
 
 /**
  * Created by matt on 8/16/14.

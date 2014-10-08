@@ -1,6 +1,5 @@
 package com.mattkula.wifigamepad;
 
-import android.app.Activity;
 import android.util.Log;
 
 import java.io.DataOutputStream;

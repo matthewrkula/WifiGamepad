@@ -13,7 +13,6 @@ import android.widget.GridLayout;
 
 import com.mattkula.wifigamepad.R;
 import com.mattkula.wifigamepad.SocketManager;
-
 import com.mattkula.wifigamepad.layouts.Controller;
 import com.mattkula.wifigamepad.layouts.ControllerButton;
 import com.mattkula.wifigamepad.utilities.ColorUtil;

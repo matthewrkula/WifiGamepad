@@ -20,8 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mattkula.wifigamepad.R;
-import com.mattkula.wifigamepad.utilities.FileUtil;
 import com.mattkula.wifigamepad.layouts.Controller;
+import com.mattkula.wifigamepad.utilities.FileUtil;
 
 import java.util.ArrayList;
 
