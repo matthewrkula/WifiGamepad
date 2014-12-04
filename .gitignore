@@ -31,3 +31,5 @@ proguard/
 .metadata/
 
 server/WifiGamepadServer.zip
+
+client/WifiGamepadClient/WifiGamepadClient.iml
